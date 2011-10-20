@@ -37,8 +37,8 @@ Getting Started
 **Second**, start using it right away:
 
 ```scala
- val pool = new org.sedis.Pool(new JedisPool(new JedisPoolConfig(), "localhost",
- 6379, 2000))
+ import org.sedis._
+ val pool = Pool(new JedisPool(new JedisPoolConfig(), "localhost", 6379, 2000))
 
  pool.withJedisClient { client =>· 
    Dress.up(client).get("single").isDefined.must(be(true))
@@ -53,7 +53,7 @@ Getting Started
 
 //or using implicits
 
-import org.sedis.Dress._
+import Dress._
 pool.withClient { client =>· 
   val result = client.lrange("test",0,2)·
   client.get("single").isDefined.must(be(true))
