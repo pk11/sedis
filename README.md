@@ -43,10 +43,10 @@ Getting Started
  pool.withJedisClient { client =>· 
    Dress.up(client).get("single").isDefined.must(be(true))
    Dress.up(client).get("single").get.must(be("foo"))
-   val r: List[String,String] = Dress.up(client).lrange("test",0,2)·
+   val r: List[String] = Dress.up(client).lrange("test",0,2)·
    r.size.must(be(2))
    r.toString.must(be("List(bar, foo)"))
-   val s: List[String,String] = Dress.up(client).sort("test")
+   val s: List[String] = Dress.up(client).sort("test")
    s.size.must(be(2))
    s.toString.must(be("List(bar, foo)"))
 }   
@@ -58,10 +58,10 @@ pool.withClient { client =>·
   client.get("single").isDefined.must(be(true))
   client.get("single").get.must(be("foo"))
   client.lindex("test",0).must(be("bar"))
-  val r: List[String,String] = client.lrange("test",0,2)·
+  val r: List[String] = client.lrange("test",0,2)·
   r.size.must(be(2))
   r.toString.must(be("List(bar, foo)"))
-  val s: List[String,String] = client.sort("test")
+  val s: List[String] = client.sort("test")
   s.size.must(be(2))
   s.toString.must(be("List(bar, foo)"))
 }
