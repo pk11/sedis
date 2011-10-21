@@ -24,10 +24,10 @@ class SedisSpec extends Spec {
        pool.withJedisClient { client => 
           Dress.up(client).get("single").isDefined.must(be(true))
           Dress.up(client).get("single").get.must(be("foo"))
-          val r = Dress.up(client).lrange("test",0,2) 
+          val r: List[String,String] = Dress.up(client).lrange("test",0,2) 
           r.size.must(be(2))
           r.toString.must(be("List(bar, foo)"))
-          val s = Dress.up(client).sort("test")
+          val s: List[String,String] = Dress.up(client).sort("test")
           s.size.must(be(2))
           s.toString.must(be("List(bar, foo)"))
        }
@@ -35,14 +35,13 @@ class SedisSpec extends Spec {
     @Test def `using implicits` = {
        import Dress._
        pool.withClient { client => 
-          val result = client.lrange("test",0,2) 
           client.get("single").isDefined.must(be(true))
           client.get("single").get.must(be("foo"))
           client.lindex("test",0).must(be("bar"))
-          val r = client.lrange("test",0,2) 
+          val r: List[String,String] = client.lrange("test",0,2) 
           r.size.must(be(2))
           r.toString.must(be("List(bar, foo)"))
-          val s = client.sort("test")
+          val s: List[String,String] = client.sort("test")
           s.size.must(be(2))
           s.toString.must(be("List(bar, foo)"))
        }
