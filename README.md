@@ -55,7 +55,6 @@ Getting Started
 
 import Dress._
 pool.withClient { client =>· 
-  val result = client.lrange("test",0,2)·
   client.get("single").isDefined.must(be(true))
   client.get("single").get.must(be("foo"))
   client.lindex("test",0).must(be("bar"))
