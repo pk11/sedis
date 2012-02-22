@@ -8,8 +8,27 @@ trait Dress {
   implicit def fromJedistoScala(j: JedisCommands) = up(j) 
 
   class Wrap(val j: JedisCommands) {
-    import collection.JavaConverters.asScalaBufferConverter
+    import collection.JavaConverters._
+
+    def hmset(key: String, values: Map[String, String]) = {
+      j.hmset(key,values.asJava)
+    }
+
+    def hmget(key: String, values: String*): List[String] = {
+      j.hmget(key,values: _*).asScala.toList
+    }
+    def smembers(key: String):Set[String] = {
+      j.smembers(key).asScala.toSet
+    }
+   
+    def hkeys(key: String): Set[String] = {
+      j.hkeys(key).asScala.toSet
+    }
     
+    def hvals(key: String): List[String] = {
+      j.hvals(key).asScala.toList
+    }
+
     def get(k: String): Option[String] = {
       val f = j.get(k)
       if (f == null) None else Some(f)
