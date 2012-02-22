@@ -68,6 +68,7 @@ pool.withClient { client =>·
 }
 ```
 
+you can find all the different enhancement methods [here](https://github.com/pk11/sedis/blob/master/src/main/scala/sedis.scala#L13)
 
 
 License
