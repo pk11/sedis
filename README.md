@@ -38,6 +38,7 @@ Getting Started
 
 ```scala
  import org.sedis._
+ import redis.clients.jedis._
  val pool = Pool(new JedisPool(new JedisPoolConfig(), "localhost", 6379, 2000))
 
  pool.withJedisClient { client =>· 
