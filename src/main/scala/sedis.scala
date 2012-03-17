@@ -20,18 +20,17 @@ trait Dress {
     def smembers(key: String):Set[String] = {
       j.smembers(key).asScala.toSet
     }
-   
+
     def hkeys(key: String): Set[String] = {
       j.hkeys(key).asScala.toSet
     }
-    
+
     def hvals(key: String): List[String] = {
       j.hvals(key).asScala.toList
     }
 
     def get(k: String): Option[String] = {
-      val f = j.get(k)
-      if (f == null) None else Some(f)
+      Option(j.get(k))
     }
     def lrange(key: String, start: Long, end: Long): List[String] = {
       j.lrange(key,start,end).asScala.toList
