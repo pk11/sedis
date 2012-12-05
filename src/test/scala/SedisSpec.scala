@@ -28,6 +28,8 @@ class SedisSpec extends Spec {
           r.size.must(be(2))
           r.toString.must(be("List(bar, foo)"))
           val s: List[String] = Dress.up(client).sort("test")
+          Dress.up(client).hmset("mymap",Map("1"->"2"))
+          Dress.up(client).hgetAll("mymap").toString.must(be("Map(1 -> 2)"))
           s.size.must(be(2))
           s.toString.must(be("List(bar, foo)"))
        }

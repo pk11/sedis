@@ -17,6 +17,11 @@ trait Dress {
     def hmget(key: String, values: String*): List[String] = {
       j.hmget(key,values: _*).asScala.toList
     }
+    
+    def hgetAll(key: String): Map[String,String] = {
+      j.hgetAll(key).asScala.toMap
+    }
+
     def smembers(key: String):Set[String] = {
       j.smembers(key).asScala.toSet
     }
@@ -48,6 +53,18 @@ trait Dress {
 }
 object Dress extends Dress
 
+class Sharded(val underlying: ShardedJedis) {
+
+ def withClient[T](body: Dress.Wrap => T) = {
+    try {
+      body(Dress.up(underlying))
+    } finally {
+      underlying.disconnect()
+    }
+  }
+
+}
+
 class Pool(val underlying: JedisPool) {
 
   def withClient[T](body: Dress.Wrap => T) = {
@@ -58,7 +75,7 @@ class Pool(val underlying: JedisPool) {
       underlying.returnResource(jedis)
     }
   }
-  def withJedisClient[T](body: JedisCommands => T) = {
+  def withJedisClient[T](body: Jedis => T) = {
     val jedis = underlying.getResource
     try {
       body(jedis)

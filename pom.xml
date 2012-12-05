@@ -1,13 +1,13 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 <properties>
-        <scala.version>2.8.1</scala.version>
+        <scala.version>2.8.3</scala.version>
 </properties>
 
 <modelVersion>4.0.0</modelVersion>
 <groupId>org.sedis</groupId>
 <artifactId>sedis</artifactId>
 <packaging>jar</packaging>
-<version>1.0</version>
+<version>1.1.0</version>
 <name>Sedis for Scala ${scala.version}</name>
 
 <dependencies>
@@ -20,7 +20,7 @@
   </dependency>
   <dependency>
       <groupId>com.codahale</groupId>
-      <artifactId>simplespec_${scala.version}</artifactId>
+      <artifactId>simplespec_2.8.1</artifactId>
       <version>0.5.2</version>
       <scope>test</scope>
     </dependency>
