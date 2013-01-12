@@ -1,13 +1,13 @@
 package org.sedis
 
-import org.junit.Test
+
 import redis.clients.util.SafeEncoder
 import redis.clients.jedis._
+import org.scalatest.matchers.ShouldMatchers._
+import org.scalatest._
 
-import com.codahale.simplespec.Spec
-
-class SedisSpec extends Spec {
-  class `A Scala redis server` {
+class SedisSpec extends FunSpec{
+  describe("A Scala redis server") {
 
     val pool = new Pool(new JedisPool(new JedisPoolConfig(), "localhost", 6379, 2000))
     val j = pool.underlying.getResource
@@ -20,32 +20,32 @@ class SedisSpec extends Spec {
         client.set("single", "foo") 
     } 
 
-    @Test def `using Dress up` = {
+    it("using Dress up")  {
        pool.withJedisClient { client => 
-          Dress.up(client).get("single").isDefined.must(be(true))
-          Dress.up(client).get("single").get.must(be("foo"))
+          Dress.up(client).get("single").isDefined should be(true)
+          Dress.up(client).get("single").get should be("foo")
           val r: List[String] = Dress.up(client).lrange("test",0,2) 
-          r.size.must(be(2))
-          r.toString.must(be("List(bar, foo)"))
+          r.size should be(2)
+          r.toString should be("List(bar, foo)")
           val s: List[String] = Dress.up(client).sort("test")
           Dress.up(client).hmset("mymap",Map("1"->"2"))
-          Dress.up(client).hgetAll("mymap").toString.must(be("Map(1 -> 2)"))
-          s.size.must(be(2))
-          s.toString.must(be("List(bar, foo)"))
+          Dress.up(client).hgetAll("mymap").toString should be("Map(1 -> 2)")
+          s.size should be(2)
+          s.toString should be("List(bar, foo)")
        }
     }
-    @Test def `using implicits` = {
+    it("using implicits") {
        import Dress._
        pool.withClient { client => 
-          client.get("single").isDefined.must(be(true))
-          client.get("single").get.must(be("foo"))
-          client.lindex("test",0).must(be("bar"))
+          client.get("single").isDefined should be(true)
+          client.get("single").get should be("foo")
+          client.lindex("test",0) should be("bar")
           val r: List[String] = client.lrange("test",0,2) 
-          r.size.must(be(2))
-          r.toString.must(be("List(bar, foo)"))
+          r.size should be(2)
+          r.toString should be("List(bar, foo)")
           val s: List[String] = client.sort("test")
-          s.size.must(be(2))
-          s.toString.must(be("List(bar, foo)"))
+          s.size should be(2)
+          s.toString should be("List(bar, foo)")
        }
     }
 }
