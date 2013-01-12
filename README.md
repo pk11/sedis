@@ -21,7 +21,7 @@ Getting Started
 <repositories>
     <repository>
         <id>org.sedis</id>
-        <url>http://guice-maven.googlecode.com/svn/trunk</url>
+        <url>http://pk11-scratch.googlecode.com/svn/trunk</url>
     </repository>
 </repositories>
 
