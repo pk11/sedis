@@ -12,7 +12,7 @@ class SedisSpec extends FunSpec{
     val pool = new Pool(new JedisPool(new JedisPoolConfig(), "localhost", 6379, 2000))
     val j = pool.underlying.getResource
     j.flushAll
-    pool.underlying.returnResource(j)
+    pool.underlying.returnResourceObject(j)
 
     pool.withClient { client =>
         Dress.up(client).rpush("test", "bar")

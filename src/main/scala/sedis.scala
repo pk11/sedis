@@ -67,20 +67,20 @@ class Sharded(val underlying: ShardedJedis) {
 
 class Pool(val underlying: JedisPool) {
 
-  def withClient[T](body: Dress.Wrap => T) = {
-    val jedis = underlying.getResource
+  def withClient[T](body: Dress.Wrap => T): T = {
+    val jedis: Jedis = underlying.getResource
     try {
       body(Dress.up(jedis))
     } finally {
-      underlying.returnResource(jedis)
+      underlying.returnResourceObject(jedis)
     }
   }
-  def withJedisClient[T](body: Jedis => T) = {
-    val jedis = underlying.getResource
+  def withJedisClient[T](body: Jedis => T): T = {
+    val jedis: Jedis = underlying.getResource
     try {
       body(jedis)
     } finally {
-      underlying.returnResource(jedis)
+      underlying.returnResourceObject(jedis)
     }
   }
 
