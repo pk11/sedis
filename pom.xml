@@ -7,7 +7,7 @@
 <groupId>org.sedis</groupId>
 <artifactId>sedis_${scala.version}</artifactId>
 <packaging>jar</packaging>
-<version>1.1.1</version>
+<version>1.1.8</version>
 <name>Sedis for Scala ${scala.version}</name>
 
 <dependencies>
