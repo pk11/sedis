@@ -55,11 +55,11 @@ Getting Started
 //or using implicits
 
 import Dress._
-pool.withClient { client =>· 
+pool.withClient { client => 
   client.get("single").isDefined.must(be(true))
   client.get("single").get.must(be("foo"))
   client.lindex("test",0).must(be("bar"))
-  val r: List[String] = client.lrange("test",0,2)·
+  val r: List[String] = client.lrange("test",0,2)
   r.size.must(be(2))
   r.toString.must(be("List(bar, foo)"))
   val s: List[String] = client.sort("test")
