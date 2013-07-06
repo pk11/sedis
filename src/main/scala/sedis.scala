@@ -1,6 +1,8 @@
 package org.sedis
 
 import redis.clients.jedis._
+import scala.util.{Failure, Try}
+import redis.clients.jedis.exceptions.JedisConnectionException
 
 trait Dress { 
   implicit def delegateToJedis(d: Wrap) = d.j 
@@ -91,31 +93,32 @@ class Pool(val underlying: JedisPool) {
 
   def withClient[T](body: Dress.Wrap => T): T = {
     val jedis: Jedis = underlying.getResource
-    var result = null.asInstanceOf[T]
-    try {
-      result = body(Dress.up(jedis))
-      result
-    } finally {
-      if(result == null){
+    val result = Try(body(Dress.up(jedis)))
+
+    result match {
+      case Failure(e:JedisConnectionException) => {
         underlying.returnBrokenResource(jedis)
-      }else{
-        underlying.returnResourceObject(jedis)
+      }
+      case _ => {
+        underlying.returnResource(jedis)
       }
     }
+    result.get
   }
+
   def withJedisClient[T](body: Jedis => T): T = {
     val jedis: Jedis = underlying.getResource
-	var result = null.asInstanceOf[T]
-    try {
-      result = body(jedis)
-      result
-    } finally {
-      if(result == null){
+    val result = Try(body(jedis))
+
+    result match {
+      case Failure(e:JedisConnectionException) => {
         underlying.returnBrokenResource(jedis)
-      }else{
-        underlying.returnResourceObject(jedis)
+      }
+      case _ => {
+        underlying.returnResource(jedis)
       }
     }
+    result.get
   }
 }
 
