@@ -70,7 +70,7 @@ trait Dress {
     }
     
     def blpop(args: String*): List[String] = {
-      j.blpop(args:_*)
+      j.blpop(args:_*).asScala.toList
     }
     
     def brpop(timeout: Int, args: String*): List[String] = {
@@ -78,7 +78,7 @@ trait Dress {
     }
 
     def brpop(args: String*): List[String] = {
-      j.brpop(args:_*)
+      j.brpop(args:_*).asScala.toList
     }
   }
   def up(j: Jedis) = new Wrap(j)
@@ -88,6 +88,27 @@ object Dress extends Dress
 
 
 class Pool(val underlying: JedisPool) {
+
+  def withClient[T](body: Dress.Wrap => T): T = {
+    val jedis: Jedis = underlying.getResource
+    try {
+      body(Dress.up(jedis))
+    } finally {
+      underlying.returnResourceObject(jedis)
+    }
+  }
+  def withJedisClient[T](body: Jedis => T): T = {
+    val jedis: Jedis = underlying.getResource
+    try {
+      body(jedis)
+    } finally {
+      underlying.returnResourceObject(jedis)
+    }
+  }
+
+}
+
+class SentinelPool(val underlying: JedisSentinelPool) {
 
   def withClient[T](body: Dress.Wrap => T): T = {
     val jedis: Jedis = underlying.getResource

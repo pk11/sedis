@@ -7,14 +7,14 @@
 <groupId>org.sedis</groupId>
 <artifactId>sedis_${scala.version}</artifactId>
 <packaging>jar</packaging>
-<version>1.1.8</version>
+<version>1.1.9</version>
 <name>Sedis for Scala ${scala.version}</name>
 
 <dependencies>
   <dependency>
-      <groupId>redis.clients</groupId>
+      <groupId>net.heartsavior</groupId>
       <artifactId>jedis</artifactId>
-      <version>2.1.0</version>
+      <version>2.2.1.1</version>
       <type>jar</type>
       <scope>compile</scope>
   </dependency>
