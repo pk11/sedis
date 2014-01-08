@@ -12,9 +12,9 @@
 
 <dependencies>
   <dependency>
-      <groupId>net.heartsavior</groupId>
+      <groupId>com.xargsgrep</groupId>
       <artifactId>jedis</artifactId>
-      <version>2.2.1.1</version>
+      <version>2.2.2-SNAPSHOT</version>
       <type>jar</type>
       <scope>compile</scope>
   </dependency>
@@ -30,6 +30,10 @@
     <repository>
         <id>repo.codahale.com</id>
         <url>http://repo.codahale.com</url>
+    </repository>
+    <repository>
+        <id>oss.sonatype.org</id>
+        <url>https://oss.sonatype.org/content/groups/public</url>
     </repository>
 </repositories>
 
