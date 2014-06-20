@@ -8,7 +8,7 @@ the most commonly-used [Redis](http://redis.io) library on the JVM.
 Requirements
 ------------
 
-* Scala 2.10.0 or 2.9.2
+* Scala 2.11, 2.10.0 or 2.9.2
 * Jedis 2.0.0
 
 

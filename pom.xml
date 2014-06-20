@@ -12,9 +12,9 @@
 
 <dependencies>
   <dependency>
-      <groupId>com.xargsgrep</groupId>
+      <groupId>redis.clients</groupId>
       <artifactId>jedis</artifactId>
-      <version>2.2.2-SNAPSHOT</version>
+      <version>2.5.1</version>
       <type>jar</type>
       <scope>compile</scope>
   </dependency>
