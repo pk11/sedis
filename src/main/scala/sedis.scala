@@ -92,18 +92,7 @@ object Dress extends Dress
 class Pool(val underlying: JedisPool) {
 
   def withClient[T](body: Dress.Wrap => T): T = {
-    val jedis: Jedis = underlying.getResource
-    val result = Try(body(Dress.up(jedis)))
-
-    result match {
-      case Failure(e:JedisConnectionException) => {
-        underlying.returnBrokenResource(jedis)
-      }
-      case _ => {
-        underlying.returnResource(jedis)
-      }
-    }
-    result.get
+    withJedisClient({ jedis: Jedis => body(Dress.up(jedis)) })
   }
 
   def withJedisClient[T](body: Jedis => T): T = {
