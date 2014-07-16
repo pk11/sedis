@@ -91,21 +91,32 @@ class Pool(val underlying: JedisPool) {
 
   def withClient[T](body: Dress.Wrap => T): T = {
     val jedis: Jedis = underlying.getResource
+    var result = null.asInstanceOf[T]
     try {
-      body(Dress.up(jedis))
+      result = body(Dress.up(jedis))
+      result
     } finally {
-      underlying.returnResourceObject(jedis)
+      if(result == null){
+        underlying.returnBrokenResource(jedis)
+      }else{
+        underlying.returnResourceObject(jedis)
+      }
     }
   }
   def withJedisClient[T](body: Jedis => T): T = {
     val jedis: Jedis = underlying.getResource
+	var result = null.asInstanceOf[T]
     try {
-      body(jedis)
+      result = body(jedis)
+      result
     } finally {
-      underlying.returnResourceObject(jedis)
+      if(result == null){
+        underlying.returnBrokenResource(jedis)
+      }else{
+        underlying.returnResourceObject(jedis)
+      }
     }
   }
-
 }
 
 class SentinelPool(val underlying: JedisSentinelPool) {
