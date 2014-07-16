@@ -9,7 +9,7 @@ Requirements
 ------------
 
 * Scala 2.11 or 2.10
-* Jedis 2.0.0
+* Jedis 2.4.2
 
 
 Getting Started
