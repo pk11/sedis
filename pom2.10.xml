@@ -1,11 +1,11 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 <properties>
-        <scala.version>2.11.1</scala.version>
+        <scala.version>2.10.0</scala.version>
 </properties>
 
 <modelVersion>4.0.0</modelVersion>
 <groupId>org.sedis</groupId>
-<artifactId>sedis_2.11</artifactId>
+<artifactId>sedis_2.10</artifactId>
 <packaging>jar</packaging>
 <version>1.2.2</version>
 <name>Sedis for Scala ${scala.version}</name>
@@ -18,12 +18,12 @@
       <type>jar</type>
       <scope>compile</scope>
   </dependency>
-<dependency>
-  <groupId>org.scalatest</groupId>
-  <artifactId>scalatest_2.11</artifactId>
-  <version>2.2.0</version>
-  <scope>test</scope>
-</dependency>
+  <dependency>
+      <groupId>org.scalatest</groupId>
+      <artifactId>scalatest_${scala.version}</artifactId>
+      <version>1.8</version>
+      <scope>test</scope>
+    </dependency>
 </dependencies>
 
 <repositories>

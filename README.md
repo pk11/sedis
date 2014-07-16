@@ -8,7 +8,7 @@ the most commonly-used [Redis](http://redis.io) library on the JVM.
 Requirements
 ------------
 
-* Scala 2.10.0 or 2.9.2
+* Scala 2.11 or 2.10
 * Jedis 2.0.0
 
 
@@ -29,7 +29,7 @@ Getting Started
     <dependency>
         <groupId>org.sedis</groupId>
         <artifactId>sedis_${scala.version}</artifactId>
-        <version>1.2.0</version>
+        <version>1.2.2</version>
     </dependency>
 </dependencies>
 ```
