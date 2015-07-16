@@ -1,5 +1,7 @@
 package org.sedis
 
+import scala.concurrent.duration._
+
 import redis.clients.jedis._
 
 trait Dress { 
@@ -9,6 +11,10 @@ trait Dress {
 
   class Wrap(val j: Jedis) {
     import collection.JavaConverters._
+
+    def expire(key: String, time: FiniteDuration) = {
+      j.expire(key, time.toSeconds.toInt)
+    }
 
     def hmset(key: String, values: Map[String, String]) = {
       j.hmset(key,values.asJava)
