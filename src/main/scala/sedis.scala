@@ -3,6 +3,8 @@ package org.sedis
 import scala.concurrent.duration._
 
 import redis.clients.jedis._
+import scala.util.{Failure, Try}
+import redis.clients.jedis.exceptions.JedisConnectionException
 
 trait Dress { 
   implicit def delegateToJedis(d: Wrap) = d.j 
@@ -96,22 +98,23 @@ object Dress extends Dress
 class Pool(val underlying: JedisPool) {
 
   def withClient[T](body: Dress.Wrap => T): T = {
-    val jedis: Jedis = underlying.getResource
-    try {
-      body(Dress.up(jedis))
-    } finally {
-      underlying.returnResourceObject(jedis)
-    }
-  }
-  def withJedisClient[T](body: Jedis => T): T = {
-    val jedis: Jedis = underlying.getResource
-    try {
-      body(jedis)
-    } finally {
-      underlying.returnResourceObject(jedis)
-    }
+    withJedisClient({ jedis: Jedis => body(Dress.up(jedis)) })
   }
 
+  def withJedisClient[T](body: Jedis => T): T = {
+    val jedis: Jedis = underlying.getResource
+    val result = Try(body(jedis))
+
+    result match {
+      case Failure(e:JedisConnectionException) => {
+        underlying.returnBrokenResource(jedis)
+      }
+      case _ => {
+        underlying.returnResource(jedis)
+      }
+    }
+    result.get
+  }
 }
 
 class SentinelPool(val underlying: JedisSentinelPool) {

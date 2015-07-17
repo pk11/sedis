@@ -6,3 +6,4 @@ project/plugins/target
 project/plugins/project/*
 .idea/*
 logs/
+*iml
