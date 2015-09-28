@@ -91,46 +91,24 @@ trait Dress {
 }
 object Dress extends Dress
 
+abstract class AbstractPool {
 
-
-class Pool(val underlying: JedisPool) {
-
-  def withClient[T](body: Dress.Wrap => T): T = {
-    val jedis: Jedis = underlying.getResource
-    try {
-      body(Dress.up(jedis))
-    } finally {
-      underlying.returnResourceObject(jedis)
-    }
-  }
-  def withJedisClient[T](body: Jedis => T): T = {
-    val jedis: Jedis = underlying.getResource
-    try {
-      body(jedis)
-    } finally {
-      underlying.returnResourceObject(jedis)
-    }
-  }
+  def using[A <% java.io.Closeable, T](s: A)(f: A => T): T = try f(s) finally s.close()
 
 }
 
-class SentinelPool(val underlying: JedisSentinelPool) {
+class Pool(val jedisPool: JedisPool) extends AbstoractPool {
 
-  def withClient[T](body: Dress.Wrap => T): T = {
-    val jedis: Jedis = underlying.getResource
-    try {
-      body(Dress.up(jedis))
-    } finally {
-      underlying.returnResourceObject(jedis)
-    }
-  }
-  def withJedisClient[T](body: Jedis => T): T = {
-    val jedis: Jedis = underlying.getResource
-    try {
-      body(jedis)
-    } finally {
-      underlying.returnResourceObject(jedis)
-    }
-  }
+  def withClient[T](body: Dress.Wrap => T): T = using(Dress.up(jedisPool.getResource))(body)
+
+  def withJedisClient[T](body: Jedis => T): T = using(jedisPool.getResource)(body)
+
+}
+
+class SentinelPool(val jedisSentinelPool: JedisSentinelPool) extends AbstractPool {
+
+  def withClient[T](body: Dress.Wrap => T): T = using(Dress.up(jedisSentinelPool.getResource))(body)
+
+  def withJedisClient[T](body: Jedis => T): T = using(jedisSentinelPool.getResource)(body)
 
 }
