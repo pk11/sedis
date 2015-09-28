@@ -58,8 +58,7 @@ trait Dress {
     }
 
     def get(k: String): Option[String] = {
-      val f = j.get(k)
-      if (f == null) None else Some(f)
+      Option(j.get(k))
     }
     def lrange(key: String, start: Long, end: Long): List[String] = {
       j.lrange(key,start,end).asScala.toList
@@ -97,7 +96,7 @@ abstract class AbstractPool {
 
 }
 
-class Pool(val jedisPool: JedisPool) extends AbstoractPool {
+class Pool(val jedisPool: JedisPool) extends AbstractPool {
 
   def withClient[T](body: Dress.Wrap => T): T = using(Dress.up(jedisPool.getResource))(body)
 
