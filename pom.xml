@@ -1,8 +1,4 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-<properties>
-        <scala.version>2.11.1</scala.version>
-</properties>
-
 <modelVersion>4.0.0</modelVersion>
 <groupId>org.sedis</groupId>
 <artifactId>sedis_2.11</artifactId>
