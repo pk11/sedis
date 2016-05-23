@@ -23,6 +23,10 @@ trait Dress {
     def hmget(key: String, values: String*): List[Option[String]] = {
       j.hmget(key,values: _*).asScala.toList.map(Option.apply)
     }
+
+    def hget(key: String, field: String): Option[String] = {
+      Option(j.hget(key, field))
+    }
     
     def hgetAll(key: String): Map[String,String] = {
       j.hgetAll(key).asScala.toMap
