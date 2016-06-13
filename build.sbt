@@ -28,10 +28,5 @@ pomExtra := (
         <name>Peter Hausel</name>
         <url>https://github.com/pk11</url>
       </developer>
-      <developer>
-        <id>graingert</id>
-        <name>Thomas Grainger</name>
-        <url>https://graingert.co.uk/</url>
-      </developer>
     </developers>
   )
