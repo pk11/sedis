@@ -1,8 +1,21 @@
+# Created by https://www.gitignore.io/api/scala
+
+### Scala ###
+*.class
+*.log
+
+# sbt specific
+.cache
+.history
+.lib/
+dist/*
 target/
+lib_managed/
+src_managed/
 project/boot/
-project/plugins
-project/target
-project/plugins/target
-project/plugins/project/*
-.idea/*
-logs/
+project/plugins/project/
+
+# Scala-IDE specific
+.scala_dependencies
+.worksheet
+

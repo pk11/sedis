@@ -20,8 +20,12 @@ trait Dress {
       j.hmset(key,values.asJava)
     }
 
-    def hmget(key: String, values: String*): List[String] = {
-      j.hmget(key,values: _*).asScala.toList
+    def hmget(key: String, values: String*): List[Option[String]] = {
+      j.hmget(key,values: _*).asScala.toList.map(Option.apply)
+    }
+
+    def hget(key: String, field: String): Option[String] = {
+      Option(j.hget(key, field))
     }
     
     def hgetAll(key: String): Map[String,String] = {
