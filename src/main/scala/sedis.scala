@@ -62,7 +62,8 @@ trait Dress {
     }
 
     def get(k: String): Option[String] = {
-      Option(j.get(k))
+      val f = j.get(k)
+      if (f == null) None else Some(f)
     }
     def lrange(key: String, start: Long, end: Long): List[String] = {
       j.lrange(key,start,end).asScala.toList
