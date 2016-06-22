@@ -65,6 +65,9 @@ trait Dress {
       val f = j.get(k)
       if (f == null) None else Some(f)
     }
+    def keys(pattern:String):List[String] = {
+      j.keys(pattern).asScala.toList
+    }
     def lrange(key: String, start: Long, end: Long): List[String] = {
       j.lrange(key,start,end).asScala.toList
     }
