@@ -17,6 +17,7 @@ Getting Started
 
 **First**, specify Sedis as a dependency:
 
+Maven:
 ```xml
 <repositories>
     <repository>
@@ -32,6 +33,11 @@ Getting Started
         <version>1.2.2</version>
     </dependency>
 </dependencies>
+```
+
+SBT:
+```scala
+libraryDependencies += "org.sedis" %% "sedis" % "1.2.2"
 ```
 
 **Second**, start using it right away:
